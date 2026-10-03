@@ -1,9 +1,7 @@
 <!DOCTYPE CrossStudio_Session_File>
 <session>
  <Bookmarks/>
- <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <BreakpointListItem trigger="" line="50" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" stopAll="false" group="Breakpoints" type="Breakpoint" state="2" filename="src/main.c" useHWbreakpoint="false"/>
- </Breakpoints>
+ <Breakpoints groups="Breakpoints" active_group="Breakpoints"/>
  <ExecutionProfileWindow/>
  <FrameBuffer>
   <FrameBufferWindow width="0" keepAspectRatio="0" zoomToFitWindow="0" showGrid="0" addressSpace="" format="0" height="0" autoEvaluate="0" scaleFactor="1" refreshPeriod="0" name="e155-lab4_Debug" addressText="" accessByDisplayWidth="0"/>
@@ -74,8 +72,8 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="14" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.h" left="0" top="68" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="src/sensAInterruptHandler.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="41" useTextEdit="1" path="src/main.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="14" y="14" useTextEdit="1" path="src/GPIOPortA_Handler.c" left="0" selected="1" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="41" useTextEdit="1" path="src/main.c" left="0" selected="1" top="32" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="32" y="31" useTextEdit="1" path="src/GPIOPortA_Handler.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="src/sensAInterruptInit.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="2" y="31" useTextEdit="1" path="src/interruptInit.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="25" y="7" useTextEdit="1" path="../../../../questions" left="0" top="0" codecName=""/>

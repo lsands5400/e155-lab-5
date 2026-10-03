@@ -2,8 +2,10 @@
 // lsands@g.hmc.edu
 // 10-01-2026
 // E155 Lab 5 Sensor A Interrupt Initialization file
-
+#include "GPIOPortA_Handler.h"
 #include "interruptInit.h"
+
+#define p 23
 
 void interruptInit(void) {
   // Arm device
@@ -13,16 +15,16 @@ void interruptInit(void) {
 
   // NVIC enable
   // Unmask
-  EXTI->IMR1 |= (1 << 7);
-  EXTI->IMR1 |= (1 << 8);
+  EXTI->IMR1 |= (1 << SENSOR_A_PIN);
+  EXTI->IMR1 |= (1 << SENSOR_B_PIN);
 
-  EXTI->RTSR1 |= (1 << 7);
-  EXTI->RTSR1 |= (1 << 8);
+  EXTI->RTSR1 |= (1 << SENSOR_A_PIN);
+  EXTI->RTSR1 |= (1 << SENSOR_B_PIN);
 
-  EXTI->FTSR1 |= (1 << 7);
-  EXTI->FTSR1 |= (1 << 8);
+  EXTI->FTSR1 |= (1 << SENSOR_A_PIN);
+  EXTI->FTSR1 |= (1 << SENSOR_B_PIN);
 
-  NVIC->ISER[0] |= (1 << 23); // p = 23
+  NVIC->ISER[0] |= (1 << p);
 
   // Global enable
   __enable_irq();
