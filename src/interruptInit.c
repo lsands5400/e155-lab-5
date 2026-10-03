@@ -27,7 +27,8 @@ void interruptInit(void) {
   // Global enable
   __enable_irq();
 
-  // Interrupt priority level
+  // Interrupt priority level 
+  // TODO: Do I need this?
   
 }
 

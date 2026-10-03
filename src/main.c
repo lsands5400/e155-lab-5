@@ -10,8 +10,7 @@
 #include "stm32l432xx.h"
 
 #define NUMBER_OF_SLICES 12
-#define SENSOR_A_PIN 7 // PA7 is 5V tolerant
-#define SENSOR_B_PIN 8 // PA8 is 5V tolerant
+#define TIME_DELAY 1000 // 1Hz = 1000ms delay
 
 volatile double w;
 
@@ -30,10 +29,14 @@ int calculateVelocity(double t1, double t2, double t3, double t4) {
   double diffB = (t3-t4);
   double avgAB = (diffA + diffB)/2;
   double velocity = 1.00/NUMBER_OF_SLICES * 1.00/avgAB;
-  return velocity;
+  return velocity; // TODO: Add direction calculation after I know this works
 }
 
 int main(void) {
+
+  // Set up counter for time keeping
+  initTIM(TIM16);
+  delay_millis(TIM16, TIME_DELAY);
 
   // Initializations
   gpioEnable(GPIO_PORT_A);
