@@ -6,7 +6,7 @@
 #include "..\lib\STM32L432KC.h"
 #include <stdio.h>
 
-int sensBInterruptInit(void) {
+int InterruptInit(void) {
   // Arm device
 
   // NVIC enable
