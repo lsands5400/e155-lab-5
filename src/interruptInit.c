@@ -2,7 +2,7 @@
 // lsands@g.hmc.edu
 // 10-01-2026
 // E155 Lab 5 Sensor A Interrupt Initialization file
-#include "GPIOPortA_Handler.h"
+
 #include "interruptInit.h"
 
 #define p 23

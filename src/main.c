@@ -5,13 +5,23 @@
 
 #include "..\lib\STM32L432KC.h"
 #include "..\lib\STM32L432KC_GPIO.h"
-#include "GPIOPortA_Handler.h"
 #include "interruptInit.h"
 #include <stdio.h>
 #include "stm32l432xx.h"
 
 #define NUMBER_OF_SLICES 12
 #define TIME_DELAY 1000 // 1Hz = 1000ms delay
+
+#define AF 0
+#define AR 1
+#define BF 2
+#define BR 3
+
+int interrupt;
+volatile double tAF; // Sensor A falling edge time
+volatile double tAR; // Sensor A rising edge time
+volatile double tBF; // Sensor B falling edge time
+volatile double tBR; // Sensor B rising edge time
 
 volatile double w;
 
@@ -22,6 +32,47 @@ int _write(int file, char *ptr, int len) {
     ITM_SendChar((*ptr++));
   }
   return len;
+}
+
+void GPIOPortA_Handler(void) {
+  // Poll to figure out which pin the interrupt is coming from
+  if ((NVIC->IABR[0] >> SENSOR_A_PIN) & 1) { 
+    
+    if ((GPIOA->IDR >> SENSOR_A_PIN) & 1) {
+      interrupt = AF;
+    }
+    else {
+      interrupt = AR;
+    }
+    // Clear flag
+    NVIC->ICPR[0] |= (1 << SENSOR_A_PIN);
+  }
+
+  if ((NVIC->IABR[0] >> SENSOR_B_PIN) & 1) {
+    if ((GPIOA->IDR >> SENSOR_B_PIN) & 1) {
+      interrupt = BF;
+    }
+    else {
+      interrupt = BR;
+    }
+    // Clear flag
+    NVIC->ICPR[0] |= (1 << SENSOR_B_PIN);
+  }
+
+  // Record time that data was gathered and assign to correct variable
+  if (interrupt == AF) {
+    tAF = TIM16->CNT;
+  }
+  else if (interrupt == AR) {
+    tAR = TIM16->CNT;
+  }
+  else if (interrupt == BF) {
+    tBF = TIM16->CNT;
+  }
+  else if (interrupt == BR) {
+    tBR = TIM16->CNT;
+  }
+
 }
 
 // Velocity calculation function

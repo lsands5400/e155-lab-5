@@ -66,19 +66,14 @@
  </Watch4>
  <Files>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="19" useTextEdit="1" path="sensAInterruptInit.h" left="0" top="6" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="14" useTextEdit="1" path="src/interruptInit.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="12" useTextEdit="1" path="src/GPIOPortA_Handler.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="12" useTextEdit="1" path="src/sensBInterruptHandler.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="18" useTextEdit="1" path="src/interruptInit.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="10" useTextEdit="1" path="src/GPIOPortA_Handler.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="14" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.h" left="0" top="68" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="src/sensAInterruptHandler.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="32" useTextEdit="1" path="src/main.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="32" y="31" useTextEdit="1" path="src/GPIOPortA_Handler.c" left="0" top="28" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="src/sensAInterruptInit.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="28" y="26" useTextEdit="1" path="src/interruptInit.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="12" y="15" useTextEdit="1" path="src/main.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="4" useTextEdit="1" path="src/interruptInit.c" left="0" selected="1" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="25" y="7" useTextEdit="1" path="../../../../questions" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="6" y="21" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_TIM.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="11" useTextEdit="1" path="src/sensBInterruptInit.h" left="0" selected="1" top="0" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="e155-lab-5" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="C:/Users/lindz/OneDrive/Documents/e155/Lab 4/lib" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

@@ -1,6 +1,6 @@
 Output/Debug/Obj/e155-lab-5/interruptInit.o: \
   C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\interruptInit.c \
-  C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\GPIOPortA_Handler.h \
+  C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\interruptInit.h \
   C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\..\lib\STM32L432KC.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\stdio.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\__SEGGER_RTL.h \
@@ -21,4 +21,4 @@ Output/Debug/Obj/e155-lab-5/interruptInit.o: \
   C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\..\lib\STM32L432KC_TIM.h \
   C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\..\lib\STM32L432KC_FLASH.h \
   C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\..\lib\STM32L432KC_USART.h \
-  C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\interruptInit.h
+  C:\Users\lindz\OneDrive\Documents\SEGGER\ Embedded\ Studio\ Projects\e155-lab-5\src\GPIOPortA_Handler.h
