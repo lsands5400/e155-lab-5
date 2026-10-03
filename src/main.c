@@ -6,6 +6,7 @@
 #include "..\lib\STM32L432KC.h"
 #include "..\lib\STM32L432KC_GPIO.h"
 #include "GPIOPortA_Handler.h"
+#include "interruptInit.h"
 #include <stdio.h>
 #include "stm32l432xx.h"
 
@@ -40,6 +41,7 @@ int main(void) {
 
   // Initializations
   gpioEnable(GPIO_PORT_A);
+  interruptInit();
 
   // Set pin modes as inputs
   pinMode(SENSOR_A_PIN, GPIO_INPUT);
@@ -50,7 +52,7 @@ int main(void) {
     GPIOPortA_Handler();
 
     // Calculations
-    calculateVelocity(tAF, tAR, tBF, tBR);
+    w = calculateVelocity(tAF, tAR, tBF, tBR);
 
     printf("Angular velocity: %f", w);
 
