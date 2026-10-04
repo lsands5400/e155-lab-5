@@ -17,7 +17,7 @@
 #define BF 2
 #define BR 3
 
-int interrupt;
+int interrupt = 5;
 volatile double tAF; // Sensor A falling edge time
 volatile double tAR; // Sensor A rising edge time
 volatile double tBF; // Sensor B falling edge time
@@ -76,7 +76,7 @@ void GPIOPortA_Handler(void) {
 }
 
 // Velocity calculation function
-int calculateVelocity(double t1, double t2, double t3, double t4) {
+double calculateVelocity(double t1, double t2, double t3, double t4) {
   double diffA = (t1-t2);
   double diffB = (t3-t4);
   double avgAB = (diffA + diffB)/2;
@@ -106,7 +106,7 @@ int main(void) {
     // Calculations
     w = calculateVelocity(tAF, tAR, tBF, tBR);
 
-    printf("Angular velocity: %f/n", w);
+    printf("Angular velocity: %f\n", w);
 
   }
 }

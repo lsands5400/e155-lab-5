@@ -10,6 +10,7 @@
 void interruptInit(void) {
   // Arm device
   RCC->APB2ENR |= (1 << 0);
+  // TODO: Fix these, they didn't work
   SYSCFG->EXTICR[2] |= (0b000 << 12); // PA7
   SYSCFG->EXTICR[3] |= (0b000 << 0); // PA8
 
