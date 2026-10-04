@@ -4,7 +4,6 @@
 "Output/Debug/Obj/e155-lab-5/STM32L432KC_RCC.o"
 "Output/Debug/Obj/e155-lab-5/STM32L432KC_TIM.o"
 "Output/Debug/Obj/e155-lab-5/STM32L432KC_USART.o"
-"Output/Debug/Obj/e155-lab-5/GPIOPortA_Handler.o"
 "Output/Debug/Obj/e155-lab-5/interruptInit.o"
 "Output/Debug/Obj/e155-lab-5/main.o"
 "Output/Debug/Obj/e155-lab-5/SEGGER_THUMB_Startup.o"

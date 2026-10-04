@@ -87,6 +87,7 @@ int calculateVelocity(double t1, double t2, double t3, double t4) {
 int main(void) {
 
   // Set up counter for time keeping
+  RCC->APB2ENR |= (1 << 17);
   initTIM(TIM16);
   delay_millis(TIM16, TIME_DELAY);
 
@@ -105,7 +106,7 @@ int main(void) {
     // Calculations
     w = calculateVelocity(tAF, tAR, tBF, tBR);
 
-    printf("Angular velocity: %f", w);
+    printf("Angular velocity: %f/n", w);
 
   }
 }

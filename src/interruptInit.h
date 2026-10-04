@@ -6,7 +6,6 @@
 #define INTERRUPT_INIT_H
 
 #include "..\lib\STM32L432KC.h"
-#include "GPIOPortA_Handler.h"
 #include <stdio.h>
 
 #define SENSOR_A_PIN 7 // PA7 is 5V tolerant
