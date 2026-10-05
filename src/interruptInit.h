@@ -8,8 +8,10 @@
 #include "..\lib\STM32L432KC.h"
 #include <stdio.h>
 
-#define SENSOR_A_PIN 7 // PA7 is 5V tolerant
+#define SENSOR_A_PIN 6 // PA6 is 5V tolerant
 #define SENSOR_B_PIN 8 // PA8 is 5V tolerant
+
+#define IRQ_NUM 23
 
 void interruptInit(void);
 

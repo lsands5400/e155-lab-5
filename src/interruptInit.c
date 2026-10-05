@@ -5,14 +5,11 @@
 
 #include "interruptInit.h"
 
-#define p 23
-
 void interruptInit(void) {
   // Arm device
   RCC->APB2ENR |= (1 << 0);
-  // TODO: Fix these, they didn't work
-  SYSCFG->EXTICR[2] |= (0b000 << 12); // PA7
-  SYSCFG->EXTICR[3] |= (0b000 << 0); // PA8
+  SYSCFG->EXTICR[2] &= ~(0b111 << 8); // PA6
+  SYSCFG->EXTICR[3] &= ~(0b111 << 0); // PA8
 
   // NVIC enable
   // Unmask
@@ -22,10 +19,7 @@ void interruptInit(void) {
   EXTI->RTSR1 |= (1 << SENSOR_A_PIN);
   EXTI->RTSR1 |= (1 << SENSOR_B_PIN);
 
-  EXTI->FTSR1 |= (1 << SENSOR_A_PIN);
-  EXTI->FTSR1 |= (1 << SENSOR_B_PIN);
-
-  NVIC->ISER[0] |= (1 << p);
+  NVIC->ISER[0] |= (1 << IRQ_NUM);
 
   // Global enable
   __enable_irq();

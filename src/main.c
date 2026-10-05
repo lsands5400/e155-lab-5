@@ -9,18 +9,14 @@
 #include <stdio.h>
 #include "stm32l432xx.h"
 
-#define NUMBER_OF_SLICES 12
 #define TIME_DELAY 1000 // 1Hz = 1000ms delay
+#define PULSES_PER_ROTATION 120 // From motor data sheet
 
-#define AF 0
-#define AR 1
-#define BF 2
-#define BR 3
+#define AR 0
+#define BR 1
 
 int interrupt = 5;
-volatile double tAF; // Sensor A falling edge time
 volatile double tAR; // Sensor A rising edge time
-volatile double tBF; // Sensor B falling edge time
 volatile double tBR; // Sensor B rising edge time
 
 volatile double w;
@@ -34,53 +30,31 @@ int _write(int file, char *ptr, int len) {
   return len;
 }
 
-void GPIOPortA_Handler(void) {
+void EXTI9_5_IRQHandler(void) {
   // Poll to figure out which pin the interrupt is coming from
-  if ((NVIC->IABR[0] >> SENSOR_A_PIN) & 1) { 
-    
-    if ((GPIOA->IDR >> SENSOR_A_PIN) & 1) {
-      interrupt = AF;
-    }
-    else {
+  if ((NVIC->IABR[0] >> IRQ_NUM) & 1) { 
+    if ((EXTI->PR1 >> SENSOR_A_PIN) & 1) {
       interrupt = AR;
+       // Record time that data was gathered and assign to correct variable
+      tAR = TIM16->CNT;
+      EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
     }
-    // Clear flag
-    NVIC->ICPR[0] |= (1 << SENSOR_A_PIN);
-  }
-
-  if ((NVIC->IABR[0] >> SENSOR_B_PIN) & 1) {
-    if ((GPIOA->IDR >> SENSOR_B_PIN) & 1) {
-      interrupt = BF;
-    }
-    else {
+    else if ((EXTI->PR1 >> SENSOR_B_PIN) & 1) {
       interrupt = BR;
+      tBR = TIM16->CNT;
+      EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
     }
-    // Clear flag
-    NVIC->ICPR[0] |= (1 << SENSOR_B_PIN);
   }
 
-  // Record time that data was gathered and assign to correct variable
-  if (interrupt == AF) {
-    tAF = TIM16->CNT;
-  }
-  else if (interrupt == AR) {
-    tAR = TIM16->CNT;
-  }
-  else if (interrupt == BF) {
-    tBF = TIM16->CNT;
-  }
-  else if (interrupt == BR) {
-    tBR = TIM16->CNT;
-  }
+  // Clear flag
+  NVIC->ICPR[0] |= (1 << IRQ_NUM);
 
 }
 
 // Velocity calculation function
-double calculateVelocity(double t1, double t2, double t3, double t4) {
-  double diffA = (t1-t2);
-  double diffB = (t3-t4);
-  double avgAB = (diffA + diffB)/2;
-  double velocity = 1.00/NUMBER_OF_SLICES * 1.00/avgAB;
+double calculateVelocity(double t1, double t2) {
+  double avgAB = (t1 + t2) / 2;
+  double velocity = 1.00 / PULSES_PER_ROTATION * 1.00 / avgAB;
   return velocity; // TODO: Add direction calculation after I know this works
 }
 
@@ -100,11 +74,9 @@ int main(void) {
   pinMode(SENSOR_B_PIN, GPIO_INPUT);
 
   while (1) {
-    // Interrupt Handler
-    GPIOPortA_Handler();
 
     // Calculations
-    w = calculateVelocity(tAF, tAR, tBF, tBR);
+    w = calculateVelocity(tAR, tBR);
 
     printf("Angular velocity: %f\n", w);
 
