@@ -58,16 +58,15 @@ void EXTI9_5_IRQHandler(void) {
 
 // Velocity calculation function
 double calculateVelocity(double t1, double t2) {
-  // TODO: Make sure calculation is correct
-  double diffAB = (t1 - t2); // TODO: only take the difference when both values are new
+  double diffAB = (t1 - t2);
   if (diffAB == 0) {
     velocity = 0.00;
   }
   else {
-    velocity = 1.00 / PULSES_PER_ROTATION * 1.00 / diffAB *1 / 4 * 1000;
+    velocity = 1.00 / PULSES_PER_ROTATION * 1.00 / diffAB * 1 / 4 * 1000;
   }
 
-  return velocity; // TODO: Add direction calculation after I know this works
+  return velocity;
 }
 
 int main(void) {
@@ -75,7 +74,6 @@ int main(void) {
   // Set up counter for time keeping
   RCC->APB2ENR |= (1 << 17);
   initTIM(TIM16);
-  delay_millis(TIM16, TIME_DELAY);
 
   // Initializations
   gpioEnable(GPIO_PORT_A);
@@ -85,13 +83,16 @@ int main(void) {
   pinMode(SENSOR_A_PIN, GPIO_INPUT);
   pinMode(SENSOR_B_PIN, GPIO_INPUT);
 
-  while (1) {
+  TIM16->CR1 &= ~(1 << 2); // Set URS for UIF
 
+  
+
+  while (1) {
+    delay_millis(TIM16, TIME_DELAY);
     // Calculations
     w = calculateVelocity(tAR, tBR);
 
-    printf("Angular velocity: %f\n", w);
-
+    printf("Angular velocity: %f rev/s\n", w);
   }
 }
 
