@@ -15,7 +15,7 @@
 #define AR 0
 #define BR 1
 
-int interrupt = 5;
+volatile double velocity;
 volatile double tAR; // Sensor A rising edge time
 volatile double tBR; // Sensor B rising edge time
 
@@ -34,17 +34,22 @@ void EXTI9_5_IRQHandler(void) {
   // Poll to figure out which pin the interrupt is coming from
   if ((NVIC->IABR[0] >> IRQ_NUM) & 1) { 
     if ((EXTI->PR1 >> SENSOR_A_PIN) & 1) {
-      interrupt = AR;
        // Record time that data was gathered and assign to correct variable
       tAR = TIM16->CNT;
       EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
     }
     else if ((EXTI->PR1 >> SENSOR_B_PIN) & 1) {
-      interrupt = BR;
       tBR = TIM16->CNT;
       EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
     }
   }
+
+  // TODO: Fix this
+  //if (((EXTI->PR1 >> SENSOR_A_PIN) == 0) & 
+  //  ((EXTI->PR1 >> SENSOR_A_PIN) == 0)) {
+  //    tAR = 0;
+  //    tBR = 0;
+  //}
 
   // Clear flag
   NVIC->ICPR[0] |= (1 << IRQ_NUM);
@@ -53,8 +58,15 @@ void EXTI9_5_IRQHandler(void) {
 
 // Velocity calculation function
 double calculateVelocity(double t1, double t2) {
-  double avgAB = (t1 + t2) / 2;
-  double velocity = 1.00 / PULSES_PER_ROTATION * 1.00 / avgAB;
+  // TODO: Make sure calculation is correct
+  double diffAB = (t1 - t2); // TODO: only take the difference when both values are new
+  if (diffAB == 0) {
+    velocity = 0.00;
+  }
+  else {
+    velocity = 1.00 / PULSES_PER_ROTATION * 1.00 / diffAB *1 / 4 * 1000;
+  }
+
   return velocity; // TODO: Add direction calculation after I know this works
 }
 
