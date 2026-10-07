@@ -17,8 +17,8 @@
 #define AF 1 
 #define BR 2
 #define BF 3
-#define CW -1
-#define CCW 1
+#define CW -1.00
+#define CCW 1.00
 
 volatile int interrupt = 5;
 volatile int prevEdge = 5;
@@ -47,8 +47,9 @@ void EXTI9_5_IRQHandler(void) {
   volatile int inputB = (GPIOA->IDR >> SENSOR_B_PIN) & 1;
 
   if ((NVIC->IABR[0] >> IRQ_NUM) & 1) {
-
-    // Figure out the edge
+    // Store previous edge
+    prevEdge = interrupt;
+    // Figure out the current edge
     if ((inputA == 1) & (inputB == 0)) {
         interrupt = AR;
     }
@@ -61,36 +62,20 @@ void EXTI9_5_IRQHandler(void) {
     else if ((inputA == 0) & (inputB == 0)) {
         interrupt = BF;
     }
-
-    // Record time that data was gathered and assign to correct variable
-    if (interrupt == AR) {
-        tAR = TIM16->CNT;
-        EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
-        pulse += 1.00;
-    }
-    else if (interrupt == AF) {
-        tAF = TIM16-> CNT;
-        EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
-        pulse += 1.00;
-    }
-    else if (interrupt == BR) {
-        tBR = TIM16->CNT;
-        EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
-        pulse += 1.00;
-    }
-    else if (interrupt == BF) {
-        tBF = TIM16-> CNT;
-        EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
-        pulse += 1.00;
-    }
+    pulse += 1.00;
   }
-  // Clear flag
+  // Clear flags
+  EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
+  EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
   NVIC->ICPR[0] |= (1 << IRQ_NUM);
 }
 
 int calculateDirection(int edge0, int edge1) {
   int direction;
-  if (((edge0 == AR) & (edge1 == BR)) |
+  if (edge0 == edge1) {
+    direction = direction;
+  }
+  else if (((edge0 == AR) & (edge1 == BR)) |
       ((edge0 == BR) & (edge1 == AF)) |
       ((edge0 == AF) & (edge1 == BF)) |
       ((edge0 == BF) & (edge1 == AR))) {
@@ -98,24 +83,13 @@ int calculateDirection(int edge0, int edge1) {
   } else {
     direction = CCW;
   }
-  prevEdge = interrupt;
   return direction;
 }
 
 // Velocity calculation function
-double calculateVelocity(double t1, double t2, double t3, double t4) {
-  double diffR = fabs(t1 - t3);
-  double diffF = fabs(t2 - t4);
-  double avgDiff = (diffR + diffF) / 2;
-  if (avgDiff == 0) {
-    velocity = 0.00;
-  }
-  else {
-    int dir = calculateDirection(prevEdge, interrupt);
-    velocity = 1.00 / 2.00 * dir * 1.00 / PULSES_PER_ROTATION * 1.00 / avgDiff * 1000;
-  }
-
-  velocity = pulse / PULSES_PER_ROTATION / 4.00;
+double calculateVelocity(void) {
+  int dir = calculateDirection(prevEdge, interrupt);
+  velocity = dir * pulse / PULSES_PER_ROTATION / 4.00;
   pulse = 0.00;
   return velocity;
 }
@@ -137,7 +111,7 @@ int main(void) {
   while (1) {
 
     // Calculations
-    w = calculateVelocity(tAR, tBR, tAF, tBF);
+    w = calculateVelocity();
 
     printf("Angular velocity: %f rev/s\n", w);
 
@@ -150,7 +124,6 @@ int main(void) {
         //tAR = 0;
         //tBR = 0;
     //}
-    // Store previous edge
 
   }
 }

@@ -80,16 +80,16 @@
  </Watch4>
  <Files>
   <SessionOpenFile windowGroup="DockEditLeft" x="25" y="15" useTextEdit="1" path="src/interruptInit.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="69" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.c" left="0" top="57" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="78" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.c" left="0" top="57" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_GPIO.h" left="0" top="68" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="22" y="109" useTextEdit="1" path="src/main.c" left="0" selected="1" top="90" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="96" useTextEdit="1" path="src/main.c" left="0" top="66" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="17" y="27" useTextEdit="1" path="src/interruptInit.c" left="0" top="2" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="25" y="7" useTextEdit="1" path="../../../../questions" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="24" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_TIM.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="25" useTextEdit="1" path="../class_tut_interrupt/tutorial-interrupts/lib/STM32L432KC_TIM.c" left="0" selected="1" top="2" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="950" useTextEdit="1" path="CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h" left="0" top="934" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="STM32L4xx/Device/Include/stm32l4xx.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="38" y="223" useTextEdit="1" path="STM32L4xx/Source/stm32l432xx_Vectors.s" left="0" top="198" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="248" useTextEdit="1" path="STM32L4xx/Source/STM32L4xx_Startup.s" left="0" top="218" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="228" useTextEdit="1" path="STM32L4xx/Source/STM32L4xx_Startup.s" left="0" top="213" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="e155-lab-5" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="C:/Users/lindz/OneDrive/Documents/e155/Lab 4/lib" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
