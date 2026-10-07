@@ -7,17 +7,28 @@
 #include "..\lib\STM32L432KC_GPIO.h"
 #include "interruptInit.h"
 #include <stdio.h>
+#include <math.h>
 #include "stm32l432xx.h"
 
 #define TIME_DELAY 1000 // 1Hz = 1000ms delay
-#define PULSES_PER_ROTATION 120 // From motor data sheet
+#define PULSES_PER_ROTATION 120.00 // From motor data sheet
 
 #define AR 0
-#define BR 1
+#define AF 1 
+#define BR 2
+#define BF 3
+#define CW -1
+#define CCW 1
+
+volatile int interrupt = 5;
+volatile int prevEdge = 5;
 
 volatile double velocity;
 volatile double tAR; // Sensor A rising edge time
+volatile double tAF; // Sensor A falling edge time
 volatile double tBR; // Sensor B rising edge time
+volatile double tBF; // Sensor B falling edge time
+volatile int pulse = 0.00;
 
 volatile double w;
 
@@ -31,41 +42,81 @@ int _write(int file, char *ptr, int len) {
 }
 
 void EXTI9_5_IRQHandler(void) {
-  // Poll to figure out which pin the interrupt is coming from
-  if ((NVIC->IABR[0] >> IRQ_NUM) & 1) { 
-    if ((EXTI->PR1 >> SENSOR_A_PIN) & 1) {
-       // Record time that data was gathered and assign to correct variable
-      tAR = TIM16->CNT;
-      EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
+  // Store input bits
+  volatile int inputA = (GPIOA->IDR >> SENSOR_A_PIN) & 1;
+  volatile int inputB = (GPIOA->IDR >> SENSOR_B_PIN) & 1;
+
+  if ((NVIC->IABR[0] >> IRQ_NUM) & 1) {
+
+    // Figure out the edge
+    if ((inputA == 1) & (inputB == 0)) {
+        interrupt = AR;
     }
-    else if ((EXTI->PR1 >> SENSOR_B_PIN) & 1) {
-      tBR = TIM16->CNT;
-      EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
+    else if ((inputA == 1) & (inputB == 1)) {
+        interrupt = BR;
+    }
+    else if ((inputA == 0) & (inputB == 1)) {
+        interrupt = AF;
+    }
+    else if ((inputA == 0) & (inputB == 0)) {
+        interrupt = BF;
+    }
+
+    // Record time that data was gathered and assign to correct variable
+    if (interrupt == AR) {
+        tAR = TIM16->CNT;
+        EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
+        pulse += 1.00;
+    }
+    else if (interrupt == AF) {
+        tAF = TIM16-> CNT;
+        EXTI->PR1 |= ~(1 << SENSOR_A_PIN);
+        pulse += 1.00;
+    }
+    else if (interrupt == BR) {
+        tBR = TIM16->CNT;
+        EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
+        pulse += 1.00;
+    }
+    else if (interrupt == BF) {
+        tBF = TIM16-> CNT;
+        EXTI->PR1 |= ~(1 << SENSOR_B_PIN);
+        pulse += 1.00;
     }
   }
-
-  // TODO: Fix this
-  //if (((EXTI->PR1 >> SENSOR_A_PIN) == 0) & 
-  //  ((EXTI->PR1 >> SENSOR_A_PIN) == 0)) {
-  //    tAR = 0;
-  //    tBR = 0;
-  //}
-
   // Clear flag
   NVIC->ICPR[0] |= (1 << IRQ_NUM);
+}
 
+int calculateDirection(int edge0, int edge1) {
+  int direction;
+  if (((edge0 == AR) & (edge1 == BR)) |
+      ((edge0 == BR) & (edge1 == AF)) |
+      ((edge0 == AF) & (edge1 == BF)) |
+      ((edge0 == BF) & (edge1 == AR))) {
+    direction = CW;
+  } else {
+    direction = CCW;
+  }
+  prevEdge = interrupt;
+  return direction;
 }
 
 // Velocity calculation function
-double calculateVelocity(double t1, double t2) {
-  double diffAB = (t1 - t2);
-  if (diffAB == 0) {
+double calculateVelocity(double t1, double t2, double t3, double t4) {
+  double diffR = fabs(t1 - t3);
+  double diffF = fabs(t2 - t4);
+  double avgDiff = (diffR + diffF) / 2;
+  if (avgDiff == 0) {
     velocity = 0.00;
   }
   else {
-    velocity = 1.00 / PULSES_PER_ROTATION * 1.00 / diffAB * 1 / 4 * 1000;
+    int dir = calculateDirection(prevEdge, interrupt);
+    velocity = 1.00 / 2.00 * dir * 1.00 / PULSES_PER_ROTATION * 1.00 / avgDiff * 1000;
   }
 
+  velocity = pulse / PULSES_PER_ROTATION / 4.00;
+  pulse = 0.00;
   return velocity;
 }
 
@@ -83,16 +134,24 @@ int main(void) {
   pinMode(SENSOR_A_PIN, GPIO_INPUT);
   pinMode(SENSOR_B_PIN, GPIO_INPUT);
 
-  TIM16->CR1 &= ~(1 << 2); // Set URS for UIF
-
-  
-
   while (1) {
-    delay_millis(TIM16, TIME_DELAY);
+
     // Calculations
-    w = calculateVelocity(tAR, tBR);
+    w = calculateVelocity(tAR, tBR, tAF, tBF);
 
     printf("Angular velocity: %f rev/s\n", w);
+
+    // 1 Hz update rate
+    delay_millis(TIM16, TIME_DELAY);
+    // pulse = 0;
+
+     //if (((EXTI->PR1 >> SENSOR_A_PIN) == 0) & 
+    //  ((EXTI->PR1 >> SENSOR_A_PIN) == 0)) { // in a certain amount of time
+        //tAR = 0;
+        //tBR = 0;
+    //}
+    // Store previous edge
+
   }
 }
 

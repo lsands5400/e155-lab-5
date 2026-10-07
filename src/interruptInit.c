@@ -19,14 +19,13 @@ void interruptInit(void) {
   EXTI->RTSR1 |= (1 << SENSOR_A_PIN);
   EXTI->RTSR1 |= (1 << SENSOR_B_PIN);
 
+  EXTI->FTSR1 |= (1 << SENSOR_A_PIN);
+  EXTI->FTSR1 |= (1 << SENSOR_B_PIN);
+
   NVIC->ISER[0] |= (1 << IRQ_NUM);
 
   // Global enable
   __enable_irq();
-
-  // Interrupt priority level 
-  // TODO: Do I need this?
-  
 }
 
 /*************************** End of file ****************************/
