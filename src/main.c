@@ -119,11 +119,11 @@ int main(void) {
     delay_millis(TIM16, TIME_DELAY);
     // pulse = 0;
 
-     //if (((EXTI->PR1 >> SENSOR_A_PIN) == 0) & 
-    //  ((EXTI->PR1 >> SENSOR_A_PIN) == 0)) { // in a certain amount of time
-        //tAR = 0;
-        //tBR = 0;
-    //}
+    if (((EXTI->PR1 >> SENSOR_A_PIN) == 0) & 
+      ((EXTI->PR1 >> SENSOR_A_PIN) == 0)) { // in a certain amount of time
+        tAR = 0;
+        tBR = 0;
+    }
 
   }
 }
